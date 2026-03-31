@@ -49,8 +49,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
+    padding: 4rem 2rem 3rem;
     text-align: center;
     position: relative;
 }
@@ -125,8 +124,7 @@ body {
 }
 
 .intro-footer {
-    position: absolute;
-    bottom: 2rem;
+    margin-top: 2rem;
     font-size: 0.7rem;
     color: var(--gray-400);
     font-weight: 300;
