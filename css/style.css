@@ -1,0 +1,639 @@
+/* ========================================
+   AI 자가진단 설문 — 미니멀 B&W 디자인
+   ======================================== */
+
+:root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #e5e5e5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --gray-800: #262626;
+    --gray-900: #171717;
+    --accent: #2563eb;
+    --accent-light: #dbeafe;
+    --font: 'Paperlogy', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font);
+    font-weight: 500;
+    color: var(--black);
+    background: var(--white);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ========== INTRO SCREEN ========== */
+
+.intro-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.intro-content {
+    max-width: 560px;
+}
+
+.intro-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 2rem;
+}
+
+.intro-title {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    color: var(--black);
+}
+
+.intro-desc {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.intro-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    margin-bottom: 3rem;
+}
+
+.intro-meta .dot {
+    width: 3px;
+    height: 3px;
+    background: var(--gray-400);
+    border-radius: 50%;
+}
+
+.btn-start {
+    display: inline-block;
+    padding: 1rem 3rem;
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--black);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.05em;
+}
+
+.btn-start:hover {
+    background: var(--gray-800);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.intro-footer {
+    position: absolute;
+    bottom: 2rem;
+    font-size: 0.7rem;
+    color: var(--gray-400);
+    font-weight: 300;
+}
+
+/* ========== SURVEY SCREEN ========== */
+
+.survey-screen {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.5rem 6rem;
+    min-height: 100vh;
+}
+
+/* Progress Bar */
+.progress-container {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    padding: 1.5rem 0 1rem;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 2px;
+    background: var(--gray-200);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--black);
+    transition: width 0.5s ease;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    letter-spacing: 0.1em;
+}
+
+/* Step Header */
+.step-header {
+    padding: 3rem 0 2rem;
+}
+
+.step-number {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--gray-400);
+    margin-bottom: 0.75rem;
+}
+
+.step-title {
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+}
+
+.step-desc {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--gray-500);
+}
+
+/* Questions */
+.question-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.question {
+    opacity: 1;
+}
+
+.q-label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    color: var(--black);
+}
+
+.q-num {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--gray-500);
+    margin-right: 0.5rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.required {
+    color: var(--black);
+    font-weight: 800;
+}
+
+.q-hint {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--gray-500);
+    margin-top: 0.25rem;
+}
+
+/* Text Input */
+.input-text {
+    width: 100%;
+    padding: 0.875rem 0;
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--black);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--gray-300);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-text::placeholder {
+    color: var(--gray-400);
+    font-weight: 400;
+}
+
+.input-text:focus {
+    border-bottom-color: var(--black);
+}
+
+/* Radio Cards (for selections like 업종, 업무분야) */
+.radio-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.5rem;
+}
+
+.radio-group--row {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+}
+
+.radio-card {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--gray-200);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.radio-card:hover {
+    border-color: var(--gray-400);
+}
+
+.radio-card input {
+    display: none;
+}
+
+.radio-card input:checked + span {
+    font-weight: 700;
+}
+
+.radio-card:has(input:checked) {
+    border-color: var(--black);
+    background: var(--black);
+    color: var(--white);
+}
+
+/* Scale Cards (1-5 scale) */
+.scale-group {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+}
+
+.scale-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1rem 0.5rem;
+    border: 1.5px solid var(--gray-200);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.scale-card:hover {
+    border-color: var(--gray-400);
+}
+
+.scale-card input {
+    display: none;
+}
+
+.scale-num {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--gray-400);
+    margin-bottom: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.scale-text {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--gray-600);
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+
+.scale-card:has(input:checked) {
+    border-color: var(--black);
+    background: var(--black);
+}
+
+.scale-card:has(input:checked) .scale-num {
+    color: var(--white);
+}
+
+.scale-card:has(input:checked) .scale-text {
+    color: var(--gray-300);
+}
+
+/* Checkbox Cards */
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.5rem;
+}
+
+.check-card {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--gray-200);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.check-card:hover {
+    border-color: var(--gray-400);
+}
+
+.check-card input {
+    display: none;
+}
+
+.check-card:has(input:checked) {
+    border-color: var(--black);
+    background: var(--black);
+    color: var(--white);
+}
+
+.check-card:has(input:checked) span {
+    font-weight: 600;
+}
+
+/* Navigation Buttons */
+.nav-buttons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: var(--white);
+    border-top: 1px solid var(--gray-100);
+    z-index: 100;
+}
+
+.btn-prev, .btn-next, .btn-submit {
+    font-family: var(--font);
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 0.875rem 2.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    letter-spacing: 0.05em;
+}
+
+.btn-prev {
+    background: transparent;
+    color: var(--gray-500);
+    border: 1px solid var(--gray-300);
+}
+
+.btn-prev:hover {
+    color: var(--black);
+    border-color: var(--black);
+}
+
+.btn-next {
+    background: var(--black);
+    color: var(--white);
+}
+
+.btn-next:hover {
+    background: var(--gray-800);
+    transform: translateY(-1px);
+}
+
+.btn-submit {
+    background: var(--black);
+    color: var(--white);
+    padding: 0.875rem 3rem;
+}
+
+.btn-submit:hover {
+    background: var(--gray-800);
+    transform: translateY(-1px);
+}
+
+/* Validation Error */
+.question.error .input-text {
+    border-bottom-color: #dc2626;
+}
+
+.question.error .q-label {
+    color: #dc2626;
+}
+
+.question.error .scale-group,
+.question.error .radio-group,
+.question.error .checkbox-group {
+    outline: 1px solid #dc2626;
+    outline-offset: 4px;
+}
+
+/* ========== LOADING SCREEN ========== */
+
+.loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.loading-content {
+    max-width: 400px;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--gray-200);
+    border-top-color: var(--black);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 2rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.loading-sub {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--gray-500);
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 768px) {
+    .survey-screen {
+        padding: 0 1rem 5rem;
+    }
+
+    .scale-group {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.25rem;
+    }
+
+    .scale-card {
+        padding: 0.75rem 0.25rem;
+    }
+
+    .scale-num {
+        font-size: 1rem;
+    }
+
+    .scale-text {
+        font-size: 0.55rem;
+    }
+
+    .radio-group {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-buttons {
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .btn-prev, .btn-next, .btn-submit {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .intro-title {
+        font-size: 2.25rem;
+    }
+
+    .step-header {
+        padding: 2rem 0 1.5rem;
+    }
+
+    .question-group {
+        gap: 2.5rem;
+    }
+
+    .scale-group {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.2rem;
+    }
+
+    .scale-card {
+        padding: 0.6rem 0.15rem;
+    }
+
+    .scale-text {
+        font-size: 0.5rem;
+    }
+
+    .radio-group {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* "기타" 입력창 */
+.input-other {
+    margin-top: 0.5rem;
+    border-bottom-color: var(--gray-400);
+}
+
+/* 퀴즈형 라디오 그룹 */
+.radio-group--quiz {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+}
+
+/* 더 밀집된 체크박스 그리드 */
+.checkbox-group--dense {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+/* 레벨별 체크카드 (Q28 AI 활용 수준) */
+.checkbox-group--level {
+    grid-template-columns: 1fr;
+}
+
+.check-card--level1 { border-left: 3px solid #d4d4d4; }
+.check-card--level2 { border-left: 3px solid #a3a3a3; }
+.check-card--level3 { border-left: 3px solid #737373; }
+.check-card--level4 { border-left: 3px solid #404040; }
+.check-card--level5 { border-left: 3px solid #171717; }
+.check-card--level6 { border-left: 3px solid #0a0a0a; }
+
+.check-card--low {
+    opacity: 0.7;
+}
+
+.check-card--mid {
+    opacity: 0.85;
+}
+
+/* ========== ANIMATIONS (GSAP classes) ========== */
+
+.form-step {
+    will-change: transform, opacity;
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+}

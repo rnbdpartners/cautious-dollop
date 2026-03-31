@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 활용 능력 진단 리포트 | 한국GPT협회</title>
+    <link rel="stylesheet" href="css/report.css">
+    <style>
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-1Thin.woff2') format('woff2'); font-weight: 100; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-2ExtraLight.woff2') format('woff2'); font-weight: 200; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-3Light.woff2') format('woff2'); font-weight: 300; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-9Black.woff2') format('woff2'); font-weight: 900; font-display: swap; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+
+    <div class="action-bar" id="action-bar">
+        <button class="btn-action" onclick="downloadPDF()">PDF 저장 / 인쇄</button>
+        <button class="btn-action btn-action--outline" onclick="location.href='index.html'">다시 진단하기</button>
+    </div>
+
+    <div id="report-container">
+
+        <!-- ===== PAGE 1: 표지 ===== -->
+        <div class="report-page page-cover" id="page-cover">
+            <div class="cover-top"><p class="cover-org">한국GPT협회</p></div>
+
+            <!-- Spline: 웹에서만 표시, PDF/인쇄 시 숨김 -->
+            <div class="cover-spline-section" id="spline-section">
+                <div class="cover-spline" id="spline-viewer">
+                    <iframe src='https://my.spline.design/nexbotrobotcharacterconcept-mI9YkL9flyspzoK1C3OslHE3/' frameborder='0' width='100%' height='100%' style="pointer-events:none;"></iframe>
+                </div>
+                <div class="cover-spline-gradient"></div>
+            </div>
+
+            <!-- PDF/인쇄용 정적 대체 표지 (평소 숨김) -->
+            <div class="cover-static" id="cover-static" style="display:none;">
+                <img src="https://kgpt.or.kr/wp-content/uploads/2026/03/명함로고칼라100.png" alt="한국GPT협회" class="cover-static-logo">
+            </div>
+
+            <div class="cover-bottom-content">
+                <h1 class="cover-title">AI 활용 능력<br>진단 리포트</h1>
+                <div class="cover-info">
+                    <p class="cover-name" id="cover-name">—</p>
+                    <p class="cover-company" id="cover-company">—</p>
+                    <p class="cover-date" id="cover-date">—</p>
+                </div>
+                <div class="cover-contact">
+                    <p class="cover-contact-org">한국GPT협회</p>
+                    <p>Tel. <a href="tel:02-562-1552">02-562-1552</a> &nbsp;|&nbsp; <a href="mailto:gpt@rnbdp.com">gpt@rnbdp.com</a></p>
+                    <p>온라인 교육: <a href="https://gptkoreaclass.com/" target="_blank">gptkoreaclass.com</a> &nbsp;|&nbsp; 기업 교육: <a href="https://kgpt.or.kr/?utm_source=naver&utm_medium=cpc&utm_campaign=셀프진단&utm_content=홍보&utm_term=셀프진단&c_memo=자체제작" target="_blank">kgpt.or.kr</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PAGE 2: 종합 진단 결과 ===== -->
+        <div class="report-page" id="page-overview">
+            <div class="page-header">
+                <span class="page-num">01</span>
+                <h2 class="page-title">종합 진단 결과</h2>
+            </div>
+            <div class="overview-grade-section">
+                <div class="grade-big">
+                    <span class="grade-number" id="grade-number">—</span>
+                    <span class="grade-label" id="grade-label">—</span>
+                    <span class="grade-of">/9</span>
+                </div>
+                <p class="grade-desc" id="grade-desc">—</p>
+                <p class="grade-percent" id="grade-percent">종합 점수: —%</p>
+            </div>
+            <div class="section-narrative" id="overview-narrative"></div>
+            <div class="overview-chart-section">
+                <div class="radar-container"><canvas id="radar-chart" width="380" height="380"></canvas></div>
+                <div class="dim-summary" id="dim-summary"></div>
+            </div>
+            <div class="insight-cards" id="insight-cards"></div>
+            <div id="roadmap-section"></div>
+        </div>
+
+        <!-- ===== PAGE 3: 등급 분포 + 평가 기준 ===== -->
+        <div class="report-page" id="page-distribution">
+            <div class="page-header">
+                <span class="page-num">02</span>
+                <h2 class="page-title">등급 분포 & 평가 기준</h2>
+            </div>
+            <div class="dist-chart-section"><canvas id="dist-chart" width="560" height="220"></canvas></div>
+            <div class="section-narrative" id="dist-narrative"></div>
+            <div class="grade-table">
+                <table>
+                    <thead><tr><th>등급</th><th>라벨</th><th>점수 범위</th><th>설명</th></tr></thead>
+                    <tbody id="grade-table-body"></tbody>
+                </table>
+            </div>
+            <div class="criteria-section">
+                <h3 class="criteria-section-title">평가 차원 안내</h3>
+                <div class="criteria-dims-compact">
+                    <div class="criteria-chip"><strong>기본 활용</strong> AI 사용 빈도, 유료 서비스, 도구 인지</div>
+                    <div class="criteria-chip"><strong>프롬프트</strong> 마크다운, Few-shot, 페르소나, 시스템 프롬프트</div>
+                    <div class="criteria-chip"><strong>멀티모달</strong> 파일 분석, VBA, 데이터 분석, 이미지 생성</div>
+                    <div class="criteria-chip"><strong>업무 통합</strong> 활용 수준, 시간 절약, AI 리터러시</div>
+                    <div class="criteria-chip"><strong>자동화</strong> GPTs, API, Make/n8n, 코딩, 도구 연동</div>
+                </div>
+                <div class="grade-scale-visual" id="grade-scale-visual"></div>
+            </div>
+        </div>
+
+        <!-- ===== PAGE 4: 차원별 상세 분석 ===== -->
+        <div class="report-page" id="page-detail">
+            <div class="page-header">
+                <span class="page-num">03</span>
+                <h2 class="page-title">차원별 상세 분석</h2>
+            </div>
+            <div class="section-narrative" id="detail-narrative"></div>
+            <div class="detail-grid-compact" id="detail-grid-all"></div>
+            <div id="detail-edu-map"></div>
+        </div>
+
+        <!-- ===== PAGE 5: 맞춤 추천 커리큘럼 (1/2) ===== -->
+        <div class="report-page" id="page-recommend-1">
+            <div class="page-header">
+                <span class="page-num">04</span>
+                <h2 class="page-title">맞춤 추천 커리큘럼</h2>
+            </div>
+            <div class="recommend-content" id="recommend-content-1"></div>
+        </div>
+
+        <!-- ===== PAGE 6: 맞춤 추천 커리큘럼 (2/2) ===== -->
+        <div class="report-page" id="page-recommend-2">
+            <div class="page-header">
+                <span class="page-num">05</span>
+                <h2 class="page-title">맞춤 추천 커리큘럼 (계속)</h2>
+            </div>
+            <div class="recommend-content" id="recommend-content-2"></div>
+        </div>
+
+        <!-- ===== PAGE 7: 한국GPT협회 소개 ===== -->
+        <div class="report-page page-about" id="page-about">
+            <div class="page-header">
+                <span class="page-num">06</span>
+                <h2 class="page-title">한국GPT협회 소개</h2>
+            </div>
+
+            <p class="about-intro">국내 최대 AI 교육 전문 기관으로서, 기업과 개인의 AI 역량 강화를 위한 체계적인 교육 프로그램을 운영하고 있습니다.</p>
+
+            <!-- 실적 숫자 -->
+            <div class="credentials-stats">
+                <div class="cred-stat">
+                    <span class="cred-stat-num">500+</span>
+                    <span class="cred-stat-label">교육 참여 기업</span>
+                </div>
+                <div class="cred-stat">
+                    <span class="cred-stat-num">1,700+</span>
+                    <span class="cred-stat-label">교육 수료 관련자</span>
+                </div>
+                <div class="cred-stat">
+                    <span class="cred-stat-num">1,600+</span>
+                    <span class="cred-stat-label">오프라인 교육 회차</span>
+                </div>
+                <div class="cred-stat">
+                    <span class="cred-stat-num">4,000+</span>
+                    <span class="cred-stat-label">학습 커뮤니티 회원</span>
+                </div>
+            </div>
+
+            <!-- 특장점 -->
+            <div class="about-features">
+                <div class="about-feature">
+                    <div class="about-feature-icon">🏆</div>
+                    <div class="about-feature-body">
+                        <strong>AI 활용 자격 인증 프로그램</strong>
+                        <p>한국GPT협회 공식 AI 활용 능력 인증 과정 운영. 초급·중급·고급·전문가 4단계 인증 체계. 교육 수료 후 공식 인증서 발급.</p>
+                    </div>
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon">💻</div>
+                    <div class="about-feature-body">
+                        <strong>ChatGPT Plus 계정 전원 제공</strong>
+                        <p>교육 기간 중 수강생 전원에게 ChatGPT Plus 계정 제공. Claude, Gemini 등 유료 AI 도구 다수 지원. 실습 환경 완벽 보장.</p>
+                    </div>
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon">🏢</div>
+                    <div class="about-feature-body">
+                        <strong>주요 기업·기관 교육 레퍼런스</strong>
+                        <p>NH투자증권, 교보생명, 국립생태원, 한국환경산업기술원, 에스푸드, 한국섬유산업연합회, 한국폴리텍대학 등 다수 기관 교육 수행.</p>
+                    </div>
+                </div>
+                <div class="about-feature">
+                    <div class="about-feature-icon">📚</div>
+                    <div class="about-feature-body">
+                        <strong>지속적 사후 지원 체계</strong>
+                        <p>전문가 상주 커뮤니티(오픈카카오톡방) 초대 및 평생 실시간 질의응답. 상시 업데이트되는 노션 교과과정 페이지 열람 가능. 실무 강사 연계 및 1:1 멘토링.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA 듀얼 -->
+            <div class="about-cta">
+                <p class="about-cta-title">지금 바로 AI 역량을 강화하세요</p>
+                <div class="cta-dual">
+                    <a href="https://gptkoreaclass.com/" target="_blank" class="cta-card cta-card--personal">
+                        <span class="cta-card-icon">🎓</span>
+                        <span class="cta-card-title">개인 역량 향상</span>
+                        <span class="cta-card-desc">온라인 교육센터에서<br>AI 활용 스킬을 학습하세요</span>
+                        <span class="cta-card-link">gptkoreaclass.com →</span>
+                    </a>
+                    <a href="https://kgpt.or.kr/?utm_source=naver&utm_medium=cpc&utm_campaign=셀프진단&utm_content=홍보&utm_term=셀프진단&c_memo=자체제작" target="_blank" class="cta-card cta-card--business">
+                        <span class="cta-card-icon">🏢</span>
+                        <span class="cta-card-title">기업·기관 맞춤 교육</span>
+                        <span class="cta-card-desc">조직에 최적화된<br>AI 교육 컨설팅을 받으세요</span>
+                        <span class="cta-card-link">kgpt.or.kr →</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 교육 레퍼런스 로고 그리드 -->
+            <div class="ref-section">
+                <p class="ref-title">교육 파트너 & 레퍼런스</p>
+                <div class="ref-grid">
+                    <img src="https://kgpt.or.kr/wp-content/uploads/2025/01/og-image-hyundai-motors.jpg" alt="현대자동차">
+                    <img src="https://kgpt.or.kr/wp-content/uploads/2025/01/kbfg-og.png" alt="KB금융">
+                    <img src="https://kgpt.or.kr/wp-content/uploads/2024/08/logo_gs_lg.png" alt="GS LG">
+                    <img src="https://kgpt.or.kr/wp-content/uploads/2025/01/20250102_224521.png" alt="ref1">
+                    <img src="https://kgpt.or.kr/wp-content/uploads/2025/01/20250102_224529.png" alt="ref2">
+                    <img src="https://kgpt.or.kr/wp-content/uploads/2025/01/20250102_224153.png" alt="ref3">
+                    <img src="https://kgpt.or.kr/wp-content/uploads/2025/01/20250102_173036.png" alt="ref4">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-1.jpg" alt="c1">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-2.jpg" alt="c2">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-3.jpg" alt="c3">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-4.jpg" alt="c4">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-5.jpg" alt="c5">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-8.jpg" alt="c8">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-9.jpg" alt="c9">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-10.jpg" alt="c10">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-11.jpg" alt="c11">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-12.jpg" alt="c12">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-13.jpg" alt="c13">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-14.jpg" alt="c14">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-15.jpg" alt="c15">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/1-17.jpg" alt="c17">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/2-1.jpg" alt="c2-1">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/2-2.jpg" alt="c2-2">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/2-3.jpg" alt="c2-3">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/2-5.jpg" alt="c2-5">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/2-6.jpg" alt="c2-6">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/2-7.jpg" alt="c2-7">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/2-8.jpg" alt="c2-8">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/2-9.jpg" alt="c2-9">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/2-10.jpg" alt="c2-10">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/2-11.jpg" alt="c2-11">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/2-12.jpg" alt="c2-12">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/3-1.jpg" alt="c3-1">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/3-2.jpg" alt="c3-2">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/3-3.jpg" alt="c3-3">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/3-5.jpg" alt="c3-5">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/3-7.jpg" alt="c3-7">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/3-8.jpg" alt="c3-8">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/3-9.jpg" alt="c3-9">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/3-10.jpg" alt="c3-10">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/3-11.jpg" alt="c3-11">
+                    <img src="https://gptkoreaclass.com/wp-content/uploads/2023/11/3-12.jpg" alt="c3-12">
+                </div>
+            </div>
+
+            <!-- 보고서 활용 방법 -->
+            <div class="usage-guide">
+                <h3 class="usage-guide-title">이 진단 보고서 활용 방법</h3>
+                <div class="usage-guide-items">
+                    <div class="usage-guide-item">
+                        <span class="usage-guide-badge">인사담당자 · 교육담당자</span>
+                        <p>본 설문 링크를 복사하여 조직원에게 배포하세요. 개개인의 진단 보고서를 수집한 뒤 내부 검토 후 <a href="mailto:gpt@rnbdp.com">gpt@rnbdp.com</a>으로 연락주시면 <strong>조직 전체 진단 분석, 맞춤 커리큘럼 설계, 견적 제시</strong>가 가능합니다. AI 활용 자격증 발급 과정도 전 직원 대상으로 진행 가능합니다. (하이에어코리아, 한화 등 도입 완료)</p>
+                    </div>
+                    <div class="usage-guide-item">
+                        <span class="usage-guide-badge usage-guide-badge--personal">개인 사용자</span>
+                        <p><a href="https://gptkoreaclass.com/" target="_blank"><strong>온라인 교육센터(gptkoreaclass.com)</strong></a>에 접속하여 진단 결과에 맞는 강의를 수강하세요. AI 활용 자격증 과정을 이수하면 이력서 스펙업에도 활용할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 하단 연락처 -->
+            <div class="about-footer">
+                <img src="https://kgpt.or.kr/wp-content/uploads/2026/03/명함로고칼라100.png" alt="한국GPT협회" class="about-footer-logo">
+                <div class="about-footer-contact">
+                    <p>Tel. <a href="tel:02-562-1552">02-562-1552</a> &nbsp;|&nbsp; Email. <a href="mailto:gpt@rnbdp.com">gpt@rnbdp.com</a></p>
+                    <p>온라인 교육센터: <a href="https://gptkoreaclass.com/" target="_blank">gptkoreaclass.com</a> &nbsp;|&nbsp; 기업 교육: <a href="https://kgpt.or.kr/?utm_source=naver&utm_medium=cpc&utm_campaign=셀프진단&utm_content=홍보&utm_term=셀프진단&c_memo=자체제작" target="_blank">kgpt.or.kr</a></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/scoring.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/report.js"></script>
+</body>
+</html>

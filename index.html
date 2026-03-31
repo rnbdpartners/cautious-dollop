@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 활용 수준 진단 | 한국GPT협회</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-1Thin.woff2') format('woff2'); font-weight: 100; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-2ExtraLight.woff2') format('woff2'); font-weight: 200; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-3Light.woff2') format('woff2'); font-weight: 300; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+        @font-face { font-family: 'Paperlogy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-9Black.woff2') format('woff2'); font-weight: 900; font-display: swap; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+<body>
+
+<!-- ========== INTRO SCREEN ========== -->
+<section id="intro-screen" class="intro-screen">
+    <div class="intro-content">
+        <p class="intro-label">한국GPT협회</p>
+        <h1 class="intro-title">AI 활용 수준<br>자가진단</h1>
+        <p class="intro-desc">
+            귀하의 AI 활용 수준을 진단하고<br>
+            맞춤형 교육 과정을 추천해드립니다.
+        </p>
+        <div class="intro-meta">
+            <span>약 5-7분 소요</span>
+            <span class="dot"></span>
+            <span>무료</span>
+        </div>
+        <button class="btn-start" onclick="startSurvey()">진단 시작하기</button>
+    </div>
+    <div class="intro-footer">
+        <p>&copy; 2026 한국GPT협회</p>
+    </div>
+</section>
+
+<!-- ========== SURVEY FORM ========== -->
+<section id="survey-screen" class="survey-screen" style="display:none;">
+
+    <div class="progress-container">
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="progress-info">
+            <span id="progress-part">PART 1 / 6</span>
+            <span id="progress-percent">0%</span>
+        </div>
+    </div>
+
+    <form id="survey-form" onsubmit="return false;">
+
+        <!-- ===== PART 1: 기본 정보 ===== -->
+        <div class="form-step" data-step="1">
+            <div class="step-header">
+                <span class="step-number">PART 1</span>
+                <h2 class="step-title">기본 정보</h2>
+                <p class="step-desc">귀하의 기본 정보를 입력해주세요.</p>
+            </div>
+            <div class="question-group">
+
+                <div class="question" data-q="1">
+                    <label class="q-label"><span class="q-num">01</span>기업명 <span class="required">*</span></label>
+                    <input type="text" name="q1" class="input-text" placeholder="소속 기업명을 입력해주세요" required>
+                </div>
+
+                <div class="question" data-q="2">
+                    <label class="q-label"><span class="q-num">02</span>업종 <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-card"><input type="radio" name="q2" value="제조업" required><span>제조업</span></label>
+                        <label class="radio-card"><input type="radio" name="q2" value="IT/소프트웨어"><span>IT/소프트웨어</span></label>
+                        <label class="radio-card"><input type="radio" name="q2" value="금융/보험"><span>금융/보험</span></label>
+                        <label class="radio-card"><input type="radio" name="q2" value="유통/도소매"><span>유통/도소매</span></label>
+                        <label class="radio-card"><input type="radio" name="q2" value="건설/부동산"><span>건설/부동산</span></label>
+                        <label class="radio-card"><input type="radio" name="q2" value="의료/제약"><span>의료/제약</span></label>
+                        <label class="radio-card"><input type="radio" name="q2" value="교육/연구"><span>교육/연구</span></label>
+                        <label class="radio-card"><input type="radio" name="q2" value="서비스업"><span>서비스업</span></label>
+                        <label class="radio-card"><input type="radio" name="q2" value="공공기관"><span>공공기관</span></label>
+                        <label class="radio-card has-other"><input type="radio" name="q2" value="기타"><span>기타</span></label>
+                    </div>
+                    <input type="text" name="q2_other" class="input-text input-other" placeholder="기타 업종을 입력해주세요" style="display:none;">
+                </div>
+
+                <div class="question" data-q="3">
+                    <label class="q-label"><span class="q-num">03</span>주요 업무 분야 <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-card"><input type="radio" name="q3" value="사무/관리" required><span>사무/관리 (총무, 인사, 기획 등)</span></label>
+                        <label class="radio-card"><input type="radio" name="q3" value="영업/마케팅"><span>영업/마케팅</span></label>
+                        <label class="radio-card"><input type="radio" name="q3" value="연구/개발"><span>연구/개발</span></label>
+                        <label class="radio-card"><input type="radio" name="q3" value="생산/품질"><span>생산/품질</span></label>
+                        <label class="radio-card"><input type="radio" name="q3" value="재무/회계"><span>재무/회계</span></label>
+                        <label class="radio-card"><input type="radio" name="q3" value="IT/시스템"><span>IT/시스템</span></label>
+                        <label class="radio-card"><input type="radio" name="q3" value="디자인/크리에이티브"><span>디자인/크리에이티브</span></label>
+                        <label class="radio-card has-other"><input type="radio" name="q3" value="기타"><span>기타</span></label>
+                    </div>
+                    <input type="text" name="q3_other" class="input-text input-other" placeholder="기타 업무 분야를 입력해주세요" style="display:none;">
+                </div>
+
+                <div class="question" data-q="4">
+                    <label class="q-label"><span class="q-num">04</span>직급 <span class="required">*</span></label>
+                    <div class="radio-group radio-group--row">
+                        <label class="radio-card"><input type="radio" name="q4" value="사원급" required><span>사원급</span></label>
+                        <label class="radio-card"><input type="radio" name="q4" value="대리/주임급"><span>대리/주임급</span></label>
+                        <label class="radio-card"><input type="radio" name="q4" value="과장/선임급"><span>과장/선임급</span></label>
+                        <label class="radio-card"><input type="radio" name="q4" value="차장/책임급"><span>차장/책임급</span></label>
+                        <label class="radio-card"><input type="radio" name="q4" value="부장급 이상"><span>부장급 이상</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="5">
+                    <label class="q-label"><span class="q-num">05</span>성명 <span class="required">*</span></label>
+                    <input type="text" name="q5" class="input-text" placeholder="보고서에 표기될 이름을 입력해주세요" required>
+                </div>
+
+                <div class="question" data-q="6">
+                    <label class="q-label"><span class="q-num">06</span>이메일 주소 <span class="required">*</span></label>
+                    <input type="email" name="q6" class="input-text" placeholder="진단 보고서를 받으실 이메일 주소" required>
+                </div>
+
+                <div class="question" data-q="7">
+                    <label class="q-label"><span class="q-num">07</span>연락처</label>
+                    <input type="tel" name="q7" class="input-text" placeholder="기업교육 보고서가 필요한 경우 연락처를 남겨주세요">
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PART 2: 기본 활용 능력 ===== -->
+        <div class="form-step" data-step="2" style="display:none;">
+            <div class="step-header">
+                <span class="step-number">PART 2</span>
+                <h2 class="step-title">기본 활용 능력</h2>
+                <p class="step-desc">AI 도구의 기본적인 사용 경험을 평가합니다.</p>
+            </div>
+            <div class="question-group">
+
+                <div class="question" data-q="8">
+                    <label class="q-label"><span class="q-num">08</span>생성형 AI를 얼마나 자주 사용하시나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q8" value="1" required><span class="scale-num">1</span><span class="scale-text">거의 사용 안 함<br>(월 1회 미만)</span></label>
+                        <label class="scale-card"><input type="radio" name="q8" value="2"><span class="scale-num">2</span><span class="scale-text">가끔 사용<br>(월 1~5회)</span></label>
+                        <label class="scale-card"><input type="radio" name="q8" value="3"><span class="scale-num">3</span><span class="scale-text">주 1~2회<br>사용</span></label>
+                        <label class="scale-card"><input type="radio" name="q8" value="4"><span class="scale-num">4</span><span class="scale-text">주 3~5회<br>사용</span></label>
+                        <label class="scale-card"><input type="radio" name="q8" value="5"><span class="scale-num">5</span><span class="scale-text">거의 매일<br>사용</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="9">
+                    <label class="q-label"><span class="q-num">09</span>하루 평균 AI 사용 시간은? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q9" value="1" required><span class="scale-num">1</span><span class="scale-text">거의<br>사용 안 함</span></label>
+                        <label class="scale-card"><input type="radio" name="q9" value="2"><span class="scale-num">2</span><span class="scale-text">1시간<br>이하</span></label>
+                        <label class="scale-card"><input type="radio" name="q9" value="3"><span class="scale-num">3</span><span class="scale-text">1~3시간</span></label>
+                        <label class="scale-card"><input type="radio" name="q9" value="4"><span class="scale-num">4</span><span class="scale-text">3~5시간</span></label>
+                        <label class="scale-card"><input type="radio" name="q9" value="5"><span class="scale-num">5</span><span class="scale-text">업무/일상 중<br>상시 사용</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="10">
+                    <label class="q-label"><span class="q-num">10</span>현재 유료 구독 중인 AI 서비스를 모두 선택해주세요. <span class="required">*</span>
+                        <span class="q-hint">(복수 선택 가능)</span>
+                    </label>
+                    <div class="checkbox-group">
+                        <label class="check-card"><input type="checkbox" name="q10" value="없음"><span>유료 구독 없음</span></label>
+                        <label class="check-card"><input type="checkbox" name="q10" value="ChatGPT"><span>ChatGPT (Plus/Team/Enterprise)</span></label>
+                        <label class="check-card"><input type="checkbox" name="q10" value="Claude"><span>Claude (Pro/Team)</span></label>
+                        <label class="check-card"><input type="checkbox" name="q10" value="Gemini"><span>Gemini Advanced</span></label>
+                        <label class="check-card"><input type="checkbox" name="q10" value="Grok"><span>Grok (X Premium)</span></label>
+                        <label class="check-card"><input type="checkbox" name="q10" value="Perplexity"><span>Perplexity Pro</span></label>
+                        <label class="check-card"><input type="checkbox" name="q10" value="GenSpark"><span>GenSpark</span></label>
+                        <label class="check-card check-card--low"><input type="checkbox" name="q10" value="뤼튼"><span>뤼튼</span></label>
+                        <label class="check-card check-card--low"><input type="checkbox" name="q10" value="무료플랫폼"><span>무료 AI 서비스 모음 플랫폼</span></label>
+                        <label class="check-card check-card--mid"><input type="checkbox" name="q10" value="기타AI"><span>기타 AI 서비스</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="11">
+                    <label class="q-label"><span class="q-num">11</span>다음 중 본인이 알고 있거나 사용해 본 AI 도구는? <span class="required">*</span>
+                        <span class="q-hint">(복수 선택 가능)</span>
+                    </label>
+                    <div class="checkbox-group checkbox-group--dense">
+                        <label class="check-card"><input type="checkbox" name="q11" value="없음"><span>AI 도구를 전혀 모름</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="ChatGPT"><span>ChatGPT</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Claude"><span>Claude</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Gemini"><span>Gemini</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Grok"><span>Grok</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Perplexity"><span>Perplexity</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="GenSpark"><span>GenSpark</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="NotebookLM"><span>Google NotebookLM</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Copilot"><span>MS Copilot</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Cursor"><span>Cursor</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="ClaudeCode"><span>Claude Code</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="GitHubCopilot"><span>GitHub Copilot</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Midjourney"><span>Midjourney</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="DALL-E"><span>DALL-E / GPT 이미지</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="SORA"><span>SORA / Runway (영상 AI)</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Suno"><span>Suno / Udio (음악 AI)</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Make"><span>Make.com</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="n8n"><span>n8n</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Zapier"><span>Zapier</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="뤼튼"><span>뤼튼</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Gamma"><span>Gamma (프레젠테이션)</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Canva AI"><span>Canva AI</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="Notion AI"><span>Notion AI</span></label>
+                        <label class="check-card"><input type="checkbox" name="q11" value="ElevenLabs"><span>ElevenLabs (음성 AI)</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="12">
+                    <label class="q-label"><span class="q-num">12</span>AI를 어떤 용도로 활용하고 계신가요? <span class="required">*</span>
+                        <span class="q-hint">(복수 선택 가능)</span>
+                    </label>
+                    <div class="checkbox-group">
+                        <label class="check-card"><input type="checkbox" name="q12" value="미활용"><span>아직 활용해본 적 없음</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="질문검색"><span>단순 질문/검색 (정보 탐색)</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="번역"><span>번역</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="요약"><span>문서 요약 / 분석</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="문서작성"><span>이메일 / 보고서 / 기획서 작성</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="브레인스토밍"><span>아이디어 브레인스토밍</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="학습"><span>학습 보조 / 개념 이해</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="이미지생성"><span>이미지 / 영상 / 음악 생성</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="코딩"><span>코드 작성 / 디버깅</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="데이터분석"><span>데이터 분석 / 시각화</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="자동화"><span>업무 자동화 (Make, n8n 등)</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="프레젠테이션"><span>프레젠테이션 / 콘텐츠 제작</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="고객응대"><span>고객 응대 / 챗봇 구축</span></label>
+                        <label class="check-card"><input type="checkbox" name="q12" value="에이전트"><span>AI 에이전트 / 워크플로우 설계</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="13">
+                    <label class="q-label"><span class="q-num">13</span>AI 도구의 기본 인터페이스와 기능을 얼마나 이해하고 계신가요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q13" value="1" required><span class="scale-num">1</span><span class="scale-text">거의<br>모름</span></label>
+                        <label class="scale-card"><input type="radio" name="q13" value="2"><span class="scale-num">2</span><span class="scale-text">기본 채팅<br>기능만 앎</span></label>
+                        <label class="scale-card"><input type="radio" name="q13" value="3"><span class="scale-num">3</span><span class="scale-text">주요 기능<br>알고 있음</span></label>
+                        <label class="scale-card"><input type="radio" name="q13" value="4"><span class="scale-num">4</span><span class="scale-text">대부분<br>능숙하게 사용</span></label>
+                        <label class="scale-card"><input type="radio" name="q13" value="5"><span class="scale-num">5</span><span class="scale-text">모든 기능<br>완벽히 활용</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PART 3: 프롬프트 능력 (전면 개편) ===== -->
+        <div class="form-step" data-step="3" style="display:none;">
+            <div class="step-header">
+                <span class="step-number">PART 3</span>
+                <h2 class="step-title">프롬프트 능력</h2>
+                <p class="step-desc">프롬프트 관련 개념과 활용 능력을 평가합니다.</p>
+            </div>
+            <div class="question-group">
+
+                <div class="question" data-q="14">
+                    <label class="q-label"><span class="q-num">14</span>마크다운(Markdown) 문법에 대해 얼마나 알고 계신가요? <span class="required">*</span>
+                        <span class="q-hint">예: # 제목, **굵게**, - 목록, ```코드블록```, | 표 | 등</span>
+                    </label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q14" value="1" required><span class="scale-num">1</span><span class="scale-text">마크다운이<br>뭔지 모름</span></label>
+                        <label class="scale-card"><input type="radio" name="q14" value="2"><span class="scale-num">2</span><span class="scale-text">들어봤지만<br>사용법 모름</span></label>
+                        <label class="scale-card"><input type="radio" name="q14" value="3"><span class="scale-num">3</span><span class="scale-text"># 제목, **굵게**<br>정도 앎</span></label>
+                        <label class="scale-card"><input type="radio" name="q14" value="4"><span class="scale-num">4</span><span class="scale-text">표, 코드블록<br>링크 등 활용</span></label>
+                        <label class="scale-card"><input type="radio" name="q14" value="5"><span class="scale-num">5</span><span class="scale-text">프롬프트에<br>적극 활용</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="15">
+                    <label class="q-label"><span class="q-num">15</span>"Few-shot 프롬프팅"이 무엇인지 알고 계신가요? <span class="required">*</span>
+                        <span class="q-hint">AI에게 예시를 제공하여 원하는 응답 패턴을 유도하는 기법</span>
+                    </label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q15" value="1" required><span class="scale-num">1</span><span class="scale-text">처음<br>들어봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q15" value="2"><span class="scale-num">2</span><span class="scale-text">들어봤지만<br>정확히 모름</span></label>
+                        <label class="scale-card"><input type="radio" name="q15" value="3"><span class="scale-num">3</span><span class="scale-text">개념은<br>이해함</span></label>
+                        <label class="scale-card"><input type="radio" name="q15" value="4"><span class="scale-num">4</span><span class="scale-text">실제로<br>활용해봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q15" value="5"><span class="scale-num">5</span><span class="scale-text">자주 활용<br>효과 체감</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="16">
+                    <label class="q-label"><span class="q-num">16</span>AI에게 "페르소나(역할)"를 부여하는 기법을 활용하시나요? <span class="required">*</span>
+                        <span class="q-hint">예: "당신은 10년 경력의 마케팅 전문가입니다" 등 역할 지정</span>
+                    </label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q16" value="1" required><span class="scale-num">1</span><span class="scale-text">역할 부여가<br>뭔지 모름</span></label>
+                        <label class="scale-card"><input type="radio" name="q16" value="2"><span class="scale-num">2</span><span class="scale-text">시도했지만<br>효과 못 느낌</span></label>
+                        <label class="scale-card"><input type="radio" name="q16" value="3"><span class="scale-num">3</span><span class="scale-text">가끔<br>사용함</span></label>
+                        <label class="scale-card"><input type="radio" name="q16" value="4"><span class="scale-num">4</span><span class="scale-text">자주 사용<br>효과 체감</span></label>
+                        <label class="scale-card"><input type="radio" name="q16" value="5"><span class="scale-num">5</span><span class="scale-text">항상 활용<br>체계적 설계</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="17">
+                    <label class="q-label"><span class="q-num">17</span>"시스템 프롬프트"가 무엇인지 알고 계신가요? <span class="required">*</span>
+                        <span class="q-hint">AI의 기본 동작 방식이나 성격을 사전에 설정하는 지침</span>
+                    </label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q17" value="1" required><span class="scale-num">1</span><span class="scale-text">처음<br>들어봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q17" value="2"><span class="scale-num">2</span><span class="scale-text">들어봤지만<br>정확히 모름</span></label>
+                        <label class="scale-card"><input type="radio" name="q17" value="3"><span class="scale-num">3</span><span class="scale-text">개념은<br>이해함</span></label>
+                        <label class="scale-card"><input type="radio" name="q17" value="4"><span class="scale-num">4</span><span class="scale-text">GPTs 등에서<br>직접 작성해봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q17" value="5"><span class="scale-num">5</span><span class="scale-text">복잡한 시스템<br>프롬프트 설계</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="18">
+                    <label class="q-label"><span class="q-num">18</span>AI에게 JSON, 표, CSV 등 구조화된 형식으로 출력을 요청해본 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q18" value="1" required><span class="scale-num">1</span><span class="scale-text">구조화 출력이<br>뭔지 모름</span></label>
+                        <label class="scale-card"><input type="radio" name="q18" value="2"><span class="scale-num">2</span><span class="scale-text">시도했지만<br>잘 안 됨</span></label>
+                        <label class="scale-card"><input type="radio" name="q18" value="3"><span class="scale-num">3</span><span class="scale-text">표나 목록<br>정도 요청</span></label>
+                        <label class="scale-card"><input type="radio" name="q18" value="4"><span class="scale-num">4</span><span class="scale-text">JSON/CSV 등<br>다양한 형식</span></label>
+                        <label class="scale-card"><input type="radio" name="q18" value="5"><span class="scale-num">5</span><span class="scale-text">복잡한 스키마<br>자유롭게 설계</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="19">
+                    <label class="q-label"><span class="q-num">19</span>프롬프트 작성 시 전체적인 수준은 어느 정도인가요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q19" value="1" required><span class="scale-num">1</span><span class="scale-text">짧은 한 문장<br>으로만 질문</span></label>
+                        <label class="scale-card"><input type="radio" name="q19" value="2"><span class="scale-num">2</span><span class="scale-text">간단한 설명<br>추가 질문</span></label>
+                        <label class="scale-card"><input type="radio" name="q19" value="3"><span class="scale-num">3</span><span class="scale-text">역할/맥락/<br>요구사항 구체적</span></label>
+                        <label class="scale-card"><input type="radio" name="q19" value="4"><span class="scale-num">4</span><span class="scale-text">예시+형식+<br>단계별 지시</span></label>
+                        <label class="scale-card"><input type="radio" name="q19" value="5"><span class="scale-num">5</span><span class="scale-text">체계적 프레임<br>워크 활용</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="20">
+                    <label class="q-label"><span class="q-num">20</span>프롬프트를 반복적으로 수정하며 결과를 개선한 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q20" value="1" required><span class="scale-num">1</span><span class="scale-text">거의 없음<br>(그대로 사용)</span></label>
+                        <label class="scale-card"><input type="radio" name="q20" value="2"><span class="scale-num">2</span><span class="scale-text">가끔 수정<br>(답이 이상할 때)</span></label>
+                        <label class="scale-card"><input type="radio" name="q20" value="3"><span class="scale-num">3</span><span class="scale-text">자주 수정<br>(더 나은 답)</span></label>
+                        <label class="scale-card"><input type="radio" name="q20" value="4"><span class="scale-num">4</span><span class="scale-text">체계적 개선<br>(여러 번 시도)</span></label>
+                        <label class="scale-card"><input type="radio" name="q20" value="5"><span class="scale-num">5</span><span class="scale-text">전략적 최적화<br>(템플릿 활용)</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PART 4: 멀티모달 & 구조화 능력 ===== -->
+        <div class="form-step" data-step="4" style="display:none;">
+            <div class="step-header">
+                <span class="step-number">PART 4</span>
+                <h2 class="step-title">멀티모달 & 구조화 능력</h2>
+                <p class="step-desc">파일 분석, 코드 활용 등 AI 고급 기능 활용 능력을 평가합니다.</p>
+            </div>
+            <div class="question-group">
+
+                <div class="question" data-q="21">
+                    <label class="q-label"><span class="q-num">21</span>AI에 파일(PDF, Excel, 이미지 등)을 업로드하여 분석해본 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q21" value="1" required><span class="scale-num">1</span><span class="scale-text">기능이 있는지<br>몰랐음</span></label>
+                        <label class="scale-card"><input type="radio" name="q21" value="2"><span class="scale-num">2</span><span class="scale-text">알지만<br>사용 안 함</span></label>
+                        <label class="scale-card"><input type="radio" name="q21" value="3"><span class="scale-num">3</span><span class="scale-text">한두 번<br>시도해봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q21" value="4"><span class="scale-num">4</span><span class="scale-text">가끔 업무에<br>활용</span></label>
+                        <label class="scale-card"><input type="radio" name="q21" value="5"><span class="scale-num">5</span><span class="scale-text">자주 활용<br>효과적 분석</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="22">
+                    <label class="q-label"><span class="q-num">22</span>AI로 PDF 문서를 분석하거나 요약한 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q22" value="1" required><span class="scale-num">1</span><span class="scale-text">없음</span></label>
+                        <label class="scale-card"><input type="radio" name="q22" value="2"><span class="scale-num">2</span><span class="scale-text">시도했지만<br>실패함</span></label>
+                        <label class="scale-card"><input type="radio" name="q22" value="3"><span class="scale-num">3</span><span class="scale-text">간단한<br>요약 받아봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q22" value="4"><span class="scale-num">4</span><span class="scale-text">여러 페이지<br>효과적 분석</span></label>
+                        <label class="scale-card"><input type="radio" name="q22" value="5"><span class="scale-num">5</span><span class="scale-text">여러 문서<br>비교 분석</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="23">
+                    <label class="q-label"><span class="q-num">23</span>AI를 활용하여 엑셀 작업(수식, VBA 등)을 해본 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q23" value="1" required><span class="scale-num">1</span><span class="scale-text">엑셀+AI가<br>가능한지 몰랐음</span></label>
+                        <label class="scale-card"><input type="radio" name="q23" value="2"><span class="scale-num">2</span><span class="scale-text">단순 질문만<br>해봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q23" value="3"><span class="scale-num">3</span><span class="scale-text">수식 만들어<br>달라고 요청</span></label>
+                        <label class="scale-card"><input type="radio" name="q23" value="4"><span class="scale-num">4</span><span class="scale-text">VBA 매크로<br>코드 활용</span></label>
+                        <label class="scale-card"><input type="radio" name="q23" value="5"><span class="scale-num">5</span><span class="scale-text">데이터 분석<br>자동화 활용</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="24">
+                    <label class="q-label"><span class="q-num">24</span>엑셀에서 VBA 편집기를 여는 단축키는 무엇인가요? <span class="required">*</span>
+                        <span class="q-hint">VBA(Visual Basic for Applications) 활용 경험을 확인합니다.</span>
+                    </label>
+                    <div class="radio-group radio-group--quiz">
+                        <label class="radio-card"><input type="radio" name="q24" value="wrong1" required><span>Ctrl + F11</span></label>
+                        <label class="radio-card"><input type="radio" name="q24" value="correct"><span>Alt + F11</span></label>
+                        <label class="radio-card"><input type="radio" name="q24" value="wrong2"><span>F11</span></label>
+                        <label class="radio-card"><input type="radio" name="q24" value="wrong3"><span>Ctrl + Shift + V</span></label>
+                        <label class="radio-card"><input type="radio" name="q24" value="unknown"><span>모르겠음</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="25">
+                    <label class="q-label"><span class="q-num">25</span>AI를 활용해 데이터 분석이나 시각화를 해본 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q25" value="1" required><span class="scale-num">1</span><span class="scale-text">가능한지<br>몰랐음</span></label>
+                        <label class="scale-card"><input type="radio" name="q25" value="2"><span class="scale-num">2</span><span class="scale-text">시도했지만<br>실패</span></label>
+                        <label class="scale-card"><input type="radio" name="q25" value="3"><span class="scale-num">3</span><span class="scale-text">간단한 통계/<br>그래프</span></label>
+                        <label class="scale-card"><input type="radio" name="q25" value="4"><span class="scale-num">4</span><span class="scale-text">코드로 데이터<br>분석 진행</span></label>
+                        <label class="scale-card"><input type="radio" name="q25" value="5"><span class="scale-num">5</span><span class="scale-text">고급 분석<br>(ML 등) 구현</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="26">
+                    <label class="q-label"><span class="q-num">26</span>AI를 활용해 이미지를 생성하거나 편집한 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q26" value="1" required><span class="scale-num">1</span><span class="scale-text">전혀<br>없음</span></label>
+                        <label class="scale-card"><input type="radio" name="q26" value="2"><span class="scale-num">2</span><span class="scale-text">관심은 있지만<br>시도 안 함</span></label>
+                        <label class="scale-card"><input type="radio" name="q26" value="3"><span class="scale-num">3</span><span class="scale-text">이미지를<br>생성해봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q26" value="4"><span class="scale-num">4</span><span class="scale-text">업무용 이미지<br>정기 제작</span></label>
+                        <label class="scale-card"><input type="radio" name="q26" value="5"><span class="scale-num">5</span><span class="scale-text">생성+편집<br>능숙하게 활용</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="27">
+                    <label class="q-label"><span class="q-num">27</span>본인의 업무 프로세스를 텍스트로 구조화하여 단계별로 설명할 수 있나요? <span class="required">*</span>
+                        <span class="q-hint">예: "1단계: 데이터 수집 → 2단계: 분석 → 3단계: 보고서 작성"</span>
+                    </label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q27" value="1" required><span class="scale-num">1</span><span class="scale-text">설명하기<br>어려움</span></label>
+                        <label class="scale-card"><input type="radio" name="q27" value="2"><span class="scale-num">2</span><span class="scale-text">대략적으로<br>설명 가능</span></label>
+                        <label class="scale-card"><input type="radio" name="q27" value="3"><span class="scale-num">3</span><span class="scale-text">주요 단계를<br>나열 가능</span></label>
+                        <label class="scale-card"><input type="radio" name="q27" value="4"><span class="scale-num">4</span><span class="scale-text">상세 단계별<br>작성 가능</span></label>
+                        <label class="scale-card"><input type="radio" name="q27" value="5"><span class="scale-num">5</span><span class="scale-text">플로우차트<br>수준 구조화</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PART 5: 업무 통합 & 리터러시 ===== -->
+        <div class="form-step" data-step="5" style="display:none;">
+            <div class="step-header">
+                <span class="step-number">PART 5</span>
+                <h2 class="step-title">업무 통합 & AI 리터러시</h2>
+                <p class="step-desc">실제 업무에서 AI를 얼마나 효과적으로 활용하는지 평가합니다.</p>
+            </div>
+            <div class="question-group">
+
+                <div class="question" data-q="28">
+                    <label class="q-label"><span class="q-num">28</span>현재 AI를 활용해서 실제로 하고 있는 것을 모두 선택해주세요. <span class="required">*</span>
+                        <span class="q-hint">(복수 선택 가능 — 이 문항은 AI 활용 수준 판단의 핵심 지표입니다)</span>
+                    </label>
+                    <div class="checkbox-group checkbox-group--level">
+                        <label class="check-card check-card--level1"><input type="checkbox" name="q28" value="채팅검색"><span>채팅으로 대화 / 정보 검색</span></label>
+                        <label class="check-card check-card--level2"><input type="checkbox" name="q28" value="문서작성"><span>보고서/기획서 초안 작성</span></label>
+                        <label class="check-card check-card--level3"><input type="checkbox" name="q28" value="이미지영상"><span>이미지 / 영상 생성</span></label>
+                        <label class="check-card check-card--level4"><input type="checkbox" name="q28" value="코드자동화"><span>코드 설계로 업무 자동화</span></label>
+                        <label class="check-card check-card--level5"><input type="checkbox" name="q28" value="에이전트"><span>워크플로우 설계로 나만의 AI 에이전트 구축</span></label>
+                        <label class="check-card check-card--level6"><input type="checkbox" name="q28" value="서비스제공"><span>웹/프로그램을 만들어 타인에게 서비스 제공</span></label>
+                        <label class="check-card"><input type="checkbox" name="q28" value="없음"><span>아직 활용하지 않음</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="29">
+                    <label class="q-label"><span class="q-num">29</span>AI를 활용하여 업무 시간을 절약한 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q29" value="1" required><span class="scale-num">1</span><span class="scale-text">없음</span></label>
+                        <label class="scale-card"><input type="radio" name="q29" value="2"><span class="scale-num">2</span><span class="scale-text">거의 효과<br>못 봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q29" value="3"><span class="scale-num">3</span><span class="scale-text">약간 절약<br>(10% 미만)</span></label>
+                        <label class="scale-card"><input type="radio" name="q29" value="4"><span class="scale-num">4</span><span class="scale-text">상당히 절약<br>(10~30%)</span></label>
+                        <label class="scale-card"><input type="radio" name="q29" value="5"><span class="scale-num">5</span><span class="scale-text">크게 단축<br>(30% 이상)</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="30">
+                    <label class="q-label"><span class="q-num">30</span>AI 활용으로 업무 품질이 향상되었다고 느끼시나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q30" value="1" required><span class="scale-num">1</span><span class="scale-text">거의 활용<br>하지 않음</span></label>
+                        <label class="scale-card"><input type="radio" name="q30" value="2"><span class="scale-num">2</span><span class="scale-text">효과 체감<br>못함</span></label>
+                        <label class="scale-card"><input type="radio" name="q30" value="3"><span class="scale-num">3</span><span class="scale-text">약간<br>향상됨</span></label>
+                        <label class="scale-card"><input type="radio" name="q30" value="4"><span class="scale-num">4</span><span class="scale-text">상당히<br>향상됨</span></label>
+                        <label class="scale-card"><input type="radio" name="q30" value="5"><span class="scale-num">5</span><span class="scale-text">획기적으로<br>개선됨</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="31">
+                    <label class="q-label"><span class="q-num">31</span>AI의 한계와 주의사항(환각, 편향, 보안 등)에 대해 얼마나 알고 계신가요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q31" value="1" required><span class="scale-num">1</span><span class="scale-text">거의<br>모름</span></label>
+                        <label class="scale-card"><input type="radio" name="q31" value="2"><span class="scale-num">2</span><span class="scale-text">환각 현상<br>정도만 앎</span></label>
+                        <label class="scale-card"><input type="radio" name="q31" value="3"><span class="scale-num">3</span><span class="scale-text">부정확 가능성<br>알고 검증</span></label>
+                        <label class="scale-card"><input type="radio" name="q31" value="4"><span class="scale-num">4</span><span class="scale-text">편향/개인정보<br>등 이해</span></label>
+                        <label class="scale-card"><input type="radio" name="q31" value="5"><span class="scale-num">5</span><span class="scale-text">윤리/저작권<br>깊이 이해</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="32">
+                    <label class="q-label"><span class="q-num">32</span>AI 활용 결과를 어떻게 처리하시나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q32" value="1" required><span class="scale-num">1</span><span class="scale-text">대부분<br>그대로 사용</span></label>
+                        <label class="scale-card"><input type="radio" name="q32" value="2"><span class="scale-num">2</span><span class="scale-text">가끔<br>확인</span></label>
+                        <label class="scale-card"><input type="radio" name="q32" value="3"><span class="scale-num">3</span><span class="scale-text">중요 내용<br>항상 검증</span></label>
+                        <label class="scale-card"><input type="radio" name="q32" value="4"><span class="scale-num">4</span><span class="scale-text">모든 결과<br>철저히 검증</span></label>
+                        <label class="scale-card"><input type="radio" name="q32" value="5"><span class="scale-num">5</span><span class="scale-text">여러 AI로<br>교차 검증</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="33">
+                    <label class="q-label"><span class="q-num">33</span>자신의 워크플로우(업무 흐름)를 단계별로 글로 설명할 수 있나요? <span class="required">*</span>
+                        <span class="q-hint">AI에게 업무를 위임하려면 자신의 업무를 구조화하여 설명할 수 있어야 합니다.</span>
+                    </label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q33" value="1" required><span class="scale-num">1</span><span class="scale-text">업무 흐름을<br>설명 못 함</span></label>
+                        <label class="scale-card"><input type="radio" name="q33" value="2"><span class="scale-num">2</span><span class="scale-text">대략적으로<br>설명 가능</span></label>
+                        <label class="scale-card"><input type="radio" name="q33" value="3"><span class="scale-num">3</span><span class="scale-text">주요 단계<br>나열 가능</span></label>
+                        <label class="scale-card"><input type="radio" name="q33" value="4"><span class="scale-num">4</span><span class="scale-text">입출력 포함<br>상세 기술</span></label>
+                        <label class="scale-card"><input type="radio" name="q33" value="5"><span class="scale-num">5</span><span class="scale-text">자동화 설계<br>수준 구조화</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PART 6: 자동화 능력 ===== -->
+        <div class="form-step" data-step="6" style="display:none;">
+            <div class="step-header">
+                <span class="step-number">PART 6</span>
+                <h2 class="step-title">자동화 능력</h2>
+                <p class="step-desc">AI를 활용한 업무 자동화 능력을 평가합니다.</p>
+            </div>
+            <div class="question-group">
+
+                <div class="question" data-q="34">
+                    <label class="q-label"><span class="q-num">34</span>GPTs(맞춤형 ChatGPT) 또는 Claude Projects를 만들어본 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q34" value="1" required><span class="scale-num">1</span><span class="scale-text">해당 기능<br>모름</span></label>
+                        <label class="scale-card"><input type="radio" name="q34" value="2"><span class="scale-num">2</span><span class="scale-text">알지만<br>만든 적 없음</span></label>
+                        <label class="scale-card"><input type="radio" name="q34" value="3"><span class="scale-num">3</span><span class="scale-text">시도했지만<br>잘 안 됨</span></label>
+                        <label class="scale-card"><input type="radio" name="q34" value="4"><span class="scale-num">4</span><span class="scale-text">간단한 GPT<br>만들어봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q34" value="5"><span class="scale-num">5</span><span class="scale-text">업무용 GPT<br>제작 사용 중</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="35">
+                    <label class="q-label"><span class="q-num">35</span>AI API(OpenAI API, Claude API 등)를 사용해본 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q35" value="1" required><span class="scale-num">1</span><span class="scale-text">API가<br>뭔지 모름</span></label>
+                        <label class="scale-card"><input type="radio" name="q35" value="2"><span class="scale-num">2</span><span class="scale-text">들어봤지만<br>사용 안 함</span></label>
+                        <label class="scale-card"><input type="radio" name="q35" value="3"><span class="scale-num">3</span><span class="scale-text">튜토리얼<br>따라 해봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q35" value="4"><span class="scale-num">4</span><span class="scale-text">간단한 API<br>호출 구현</span></label>
+                        <label class="scale-card"><input type="radio" name="q35" value="5"><span class="scale-num">5</span><span class="scale-text">API 활용<br>시스템 구축</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="36">
+                    <label class="q-label"><span class="q-num">36</span>Make.com, Zapier, n8n 등으로 업무 자동화를 구현해본 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q36" value="1" required><span class="scale-num">1</span><span class="scale-text">도구들을<br>전혀 모름</span></label>
+                        <label class="scale-card"><input type="radio" name="q36" value="2"><span class="scale-num">2</span><span class="scale-text">들어봤지만<br>사용 안 함</span></label>
+                        <label class="scale-card"><input type="radio" name="q36" value="3"><span class="scale-num">3</span><span class="scale-text">튜토리얼<br>따라 해봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q36" value="4"><span class="scale-num">4</span><span class="scale-text">간단한 자동화<br>구현해봄</span></label>
+                        <label class="scale-card"><input type="radio" name="q36" value="5"><span class="scale-num">5</span><span class="scale-text">복잡한 시스템<br>운영 중</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="37">
+                    <label class="q-label"><span class="q-num">37</span>코딩 또는 프로그래밍 경험은 어느 정도인가요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q37" value="1" required><span class="scale-num">1</span><span class="scale-text">전혀<br>없음</span></label>
+                        <label class="scale-card"><input type="radio" name="q37" value="2"><span class="scale-num">2</span><span class="scale-text">간단한<br>HTML/CSS</span></label>
+                        <label class="scale-card"><input type="radio" name="q37" value="3"><span class="scale-num">3</span><span class="scale-text">엑셀 매크로<br>(VBA)</span></label>
+                        <label class="scale-card"><input type="radio" name="q37" value="4"><span class="scale-num">4</span><span class="scale-text">Python/JS 등<br>프로그래밍</span></label>
+                        <label class="scale-card"><input type="radio" name="q37" value="5"><span class="scale-num">5</span><span class="scale-text">전문 개발자<br>수준</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="38">
+                    <label class="q-label"><span class="q-num">38</span>반복적인 업무를 자동화하기 위해 AI를 활용한 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q38" value="1" required><span class="scale-num">1</span><span class="scale-text">없음</span></label>
+                        <label class="scale-card"><input type="radio" name="q38" value="2"><span class="scale-num">2</span><span class="scale-text">시도했지만<br>실패</span></label>
+                        <label class="scale-card"><input type="radio" name="q38" value="3"><span class="scale-num">3</span><span class="scale-text">간단한 작업<br>자동화</span></label>
+                        <label class="scale-card"><input type="radio" name="q38" value="4"><span class="scale-num">4</span><span class="scale-text">여러 단계<br>작업 자동화</span></label>
+                        <label class="scale-card"><input type="radio" name="q38" value="5"><span class="scale-num">5</span><span class="scale-text">복잡한 워크플로우<br>완전 자동화</span></label>
+                    </div>
+                </div>
+
+                <div class="question" data-q="39">
+                    <label class="q-label"><span class="q-num">39</span>AI와 다른 도구(엑셀, 구글시트, 슬랙, 이메일 등)를 연동해본 경험이 있나요? <span class="required">*</span></label>
+                    <div class="scale-group">
+                        <label class="scale-card"><input type="radio" name="q39" value="1" required><span class="scale-num">1</span><span class="scale-text">없음</span></label>
+                        <label class="scale-card"><input type="radio" name="q39" value="2"><span class="scale-num">2</span><span class="scale-text">연동 가능한지<br>몰랐음</span></label>
+                        <label class="scale-card"><input type="radio" name="q39" value="3"><span class="scale-num">3</span><span class="scale-text">시도했지만<br>실패</span></label>
+                        <label class="scale-card"><input type="radio" name="q39" value="4"><span class="scale-num">4</span><span class="scale-text">간단한 연동<br>구현</span></label>
+                        <label class="scale-card"><input type="radio" name="q39" value="5"><span class="scale-num">5</span><span class="scale-text">여러 도구<br>복합 연동</span></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="nav-buttons">
+        <button class="btn-prev" id="btn-prev" onclick="prevStep()" style="display:none;"><span>&larr;</span> 이전</button>
+        <button class="btn-next" id="btn-next" onclick="nextStep()">다음 <span>&rarr;</span></button>
+        <button class="btn-submit" id="btn-submit" onclick="submitSurvey()" style="display:none;">진단 결과 보기</button>
+    </div>
+</section>
+
+<!-- ========== LOADING SCREEN ========== -->
+<section id="loading-screen" class="loading-screen" style="display:none;">
+    <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">AI 활용 수준을 분석하고 있습니다...</p>
+        <p class="loading-sub">맞춤형 보고서를 생성 중입니다</p>
+    </div>
+</section>
+
+<script src="js/scoring.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

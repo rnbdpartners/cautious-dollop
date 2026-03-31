@@ -1,0 +1,1745 @@
+/* ========================================
+   Report Styles — A4 세로, 미니멀 B&W
+   ======================================== */
+
+:root {
+    --black: #0a0a0a;
+    --white: #ffffff;
+    --gray-50: #fafafa;
+    --gray-100: #f5f5f5;
+    --gray-200: #e5e5e5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --gray-800: #262626;
+    --gray-900: #171717;
+    --font: 'Paperlogy', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --page-width: 210mm;
+    --page-height: 297mm;
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 14px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+body {
+    font-family: var(--font);
+    font-weight: 400;
+    color: var(--black);
+    background: var(--gray-100);
+    line-height: 1.6;
+}
+
+/* ===== Action Bar ===== */
+.action-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--black);
+}
+
+.btn-action {
+    font-family: var(--font);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.6rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--white);
+    color: var(--black);
+    letter-spacing: 0.03em;
+}
+
+.btn-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255,255,255,0.2);
+}
+
+.btn-action--outline {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid var(--gray-600);
+}
+
+.btn-action--outline:hover {
+    border-color: var(--white);
+}
+
+/* ===== Report Pages — A4 기준 ===== */
+.report-page {
+    width: var(--page-width);
+    min-height: var(--page-height);
+    margin: 3rem auto;
+    padding: 1.5cm 1.8cm;
+    background: var(--white);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    position: relative;
+    page-break-after: always;
+}
+
+/* 표지만 정확히 A4 고정 */
+.page-cover {
+    height: var(--page-height);
+    overflow: hidden;
+}
+
+.report-page:first-child {
+    margin-top: 5rem;
+}
+
+/* ===== Page Header ===== */
+.page-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.page-num {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--gray-400);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+}
+
+.page-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* ===== PAGE 1: Cover ===== */
+.page-cover {
+    padding: 0 !important;
+    margin: 3rem auto;
+    width: var(--page-width);
+    height: var(--page-height);
+    position: relative;
+    overflow: hidden;
+}
+
+.cover-top {
+    position: absolute;
+    top: 1.2cm;
+    left: 2cm;
+    z-index: 10;
+}
+
+.cover-org {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--white);
+    text-transform: uppercase;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* Spline: 표지 전체를 배경으로 채움 */
+.cover-spline-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.cover-spline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+}
+
+.cover-spline iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: none;
+}
+
+/* 하단 흰색→투명 그라데이션 */
+.cover-spline-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+    background: linear-gradient(
+        to top,
+        #ffffff 0%,
+        #ffffff 20%,
+        rgba(255,255,255,0.95) 35%,
+        rgba(255,255,255,0.7) 55%,
+        rgba(255,255,255,0.3) 75%,
+        rgba(255,255,255,0) 100%
+    );
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* 텍스트: 하단 고정 */
+.cover-bottom-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0 2cm 1.2cm;
+    text-align: center;
+    z-index: 3;
+}
+
+.cover-title {
+    font-size: 2.75rem;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    color: var(--black);
+}
+
+.cover-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.cover-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.cover-company {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--gray-600);
+}
+
+.cover-date {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--gray-400);
+}
+
+.cover-contact {
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-200);
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: var(--gray-500);
+    line-height: 1.8;
+}
+
+.cover-contact p:first-child {
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 0.25rem;
+}
+
+.cover-contact a {
+    color: var(--gray-500);
+    text-decoration: none;
+}
+
+.cover-contact a:hover {
+    text-decoration: underline;
+    color: var(--black);
+}
+
+/* ===== PDF/인쇄용 정적 표지 ===== */
+.cover-static {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(
+        135deg,
+        #eef9e8 0%,
+        #e8f5ee 20%,
+        #e4f2f5 40%,
+        #e0eff8 60%,
+        #dcedf9 80%,
+        #d8ecf8 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 30%;
+}
+
+.cover-static-logo {
+    display: block;
+    max-width: 280px;
+    height: auto;
+}
+
+.cover-contact-org {
+    font-weight: 800 !important;
+    font-size: 0.75rem !important;
+    color: var(--black) !important;
+    margin-bottom: 0.3rem !important;
+}
+
+/* ===== CTA 듀얼 카드 (개인/기업 분리) ===== */
+.cta-dual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.cta-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    text-decoration: none;
+    color: var(--black);
+    border: 1px solid var(--gray-200);
+    transition: all 0.2s;
+}
+
+.cta-card:hover {
+    border-color: var(--black);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.cta-card-icon {
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+}
+
+.cta-card-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    margin-bottom: 0.2rem;
+}
+
+.cta-card-desc {
+    font-size: 0.55rem;
+    font-weight: 400;
+    color: var(--gray-500);
+    line-height: 1.4;
+    margin-bottom: 0.3rem;
+}
+
+.cta-card-link {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--gray-400);
+}
+
+.cta-card--personal {
+    border-left: 3px solid #2563eb;
+}
+
+.cta-card--personal .cta-card-link {
+    color: #2563eb;
+}
+
+.cta-card--business {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+    border-left: 3px solid var(--black);
+}
+
+.cta-card--business .cta-card-desc {
+    color: var(--gray-400);
+}
+
+.cta-card--business .cta-card-link {
+    color: var(--gray-300);
+}
+
+.cta-card--business:hover {
+    background: var(--gray-800);
+}
+
+.cta-footer {
+    text-align: center;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--gray-200);
+    font-size: 0.65rem;
+    color: var(--gray-500);
+}
+
+.cta-footer a {
+    color: var(--gray-500);
+    text-decoration: none;
+}
+
+.cta-footer a:hover {
+    color: var(--black);
+    text-decoration: underline;
+}
+
+.cta-footer-org {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--black);
+    margin-top: 0.3rem;
+}
+
+/* ===== PAGE 6: 한국GPT협회 소개 ===== */
+.about-intro {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+.credentials-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.cred-stat {
+    text-align: center;
+    padding: 0.6rem 0.25rem;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+}
+
+.cred-stat-num {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--black);
+    line-height: 1.2;
+}
+
+.cred-stat-label {
+    display: block;
+    font-size: 0.55rem;
+    font-weight: 500;
+    color: var(--gray-500);
+    margin-top: 0.15rem;
+}
+
+.about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.about-feature {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid var(--gray-200);
+}
+
+.about-feature-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.about-feature-body strong {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 0.1rem;
+}
+
+.about-feature-body p {
+    font-size: 0.55rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* About CTA */
+.about-cta {
+    margin-bottom: 1.25rem;
+}
+
+.about-cta-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+/* Reference Logo Grid */
+.ref-section {
+    margin-bottom: 1rem;
+}
+
+.ref-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--gray-500);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.ref-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+}
+
+.ref-grid img {
+    height: 36px;
+    width: auto;
+    max-width: 100px;
+    object-fit: contain;
+}
+
+/* Usage Guide */
+.usage-guide {
+    margin-bottom: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+}
+
+.usage-guide-title {
+    font-size: 0.75rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.usage-guide-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.usage-guide-item {
+    font-size: 0.6rem;
+    line-height: 1.7;
+    color: var(--gray-600);
+}
+
+.usage-guide-item a {
+    color: var(--black);
+    text-decoration: underline;
+}
+
+.usage-guide-badge {
+    display: inline-block;
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    background: var(--black);
+    color: var(--white);
+    margin-bottom: 0.2rem;
+}
+
+.usage-guide-badge--personal {
+    background: #2563eb;
+}
+
+/* About Footer */
+.about-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+.about-footer-logo {
+    height: 36px;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.about-footer-contact {
+    font-size: 0.6rem;
+    color: var(--gray-500);
+    line-height: 1.7;
+}
+
+.about-footer-contact a {
+    color: var(--gray-600);
+    text-decoration: none;
+}
+
+.about-footer-contact a:hover {
+    color: var(--black);
+    text-decoration: underline;
+}
+
+/* ===== Section Narrative (설명문) ===== */
+.section-narrative {
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    background: var(--gray-50);
+    border-left: 3px solid var(--black);
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    line-height: 1.8;
+}
+
+/* ===== PAGE 2: Overview ===== */
+.overview-grade-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.grade-big {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.grade-number {
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.grade-label {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gray-600);
+}
+
+.grade-of {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--gray-400);
+}
+
+.grade-desc {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--gray-500);
+    margin-bottom: 0.25rem;
+}
+
+.grade-percent {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gray-400);
+}
+
+.overview-chart-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.radar-container {
+    display: flex;
+    justify-content: center;
+}
+
+.radar-container canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+.dim-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1rem;
+}
+
+.dim-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.dim-grade {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.9rem;
+    font-weight: 800;
+    border-radius: 50%;
+    color: var(--white);
+    flex-shrink: 0;
+}
+
+.dim-info {
+    flex: 1;
+}
+
+.dim-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.dim-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--gray-200);
+    margin-top: 0.25rem;
+}
+
+.dim-bar-fill {
+    height: 100%;
+    transition: width 0.5s ease;
+}
+
+.dim-percent {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    margin-top: 0.15rem;
+}
+
+/* ===== PAGE 3: Distribution ===== */
+.dist-chart-section {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.dist-chart-section canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+.dist-explanation {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    margin-top: 1rem;
+    line-height: 1.8;
+}
+
+.grade-table {
+    width: 100%;
+}
+
+.grade-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+}
+
+.grade-table th {
+    text-align: left;
+    font-weight: 700;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid var(--black);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--gray-500);
+}
+
+.grade-table td {
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid var(--gray-100);
+    font-weight: 400;
+}
+
+.grade-table tr.current-grade {
+    background: var(--black);
+    color: var(--white);
+    font-weight: 700;
+}
+
+.grade-table tr.current-grade td {
+    border-bottom-color: var(--gray-800);
+}
+
+/* ===== PAGE 4-5: Detail ===== */
+.detail-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.detail-card {
+    padding: 1.5rem;
+    border: 1px solid var(--gray-200);
+}
+
+.detail-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.detail-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.detail-card-grade {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.detail-card-grade-num {
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.detail-card-grade-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray-500);
+}
+
+.detail-progress {
+    width: 100%;
+    height: 6px;
+    background: var(--gray-200);
+    margin-bottom: 1rem;
+}
+
+.detail-progress-fill {
+    height: 100%;
+}
+
+.detail-comment {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+}
+
+.detail-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.detail-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    background: var(--gray-100);
+    color: var(--gray-600);
+}
+
+.detail-tag--strength {
+    background: var(--black);
+    color: var(--white);
+}
+
+/* ===== PAGE 6: Criteria ===== */
+.criteria-intro {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+}
+
+.criteria-dims {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.criteria-dim {
+    padding: 1rem;
+    border: 1px solid var(--gray-200);
+}
+
+.criteria-dim h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.criteria-dim p {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--gray-500);
+    line-height: 1.6;
+}
+
+.criteria-grade-scale h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.grade-scale-visual {
+    display: flex;
+    gap: 2px;
+    height: 40px;
+}
+
+.grade-scale-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: var(--white);
+    position: relative;
+}
+
+.grade-scale-item .gs-label {
+    font-size: 0.5rem;
+    font-weight: 400;
+    margin-top: 2px;
+}
+
+.grade-scale-item.current {
+    outline: 2px solid var(--black);
+    outline-offset: 2px;
+    transform: scaleY(1.2);
+}
+
+/* ===== PAGE 7: Recommend ===== */
+.recommend-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.rec-card {
+    padding: 1.1rem 1.4rem;
+    border: 1px solid var(--gray-200);
+}
+
+.rec-card--primary {
+    border-color: var(--black);
+    border-width: 2px;
+    padding: 1.2rem 1.4rem;
+}
+
+/* 핵심 추천 히어로 카드 — 검정 배경 */
+.rec-hero {
+    background: var(--black);
+    color: var(--white);
+    padding: 1.5rem 1.6rem;
+}
+
+.rec-hero-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--black);
+    background: #fbbf24;
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.rec-hero-course {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.01em;
+}
+
+.rec-hero-level {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray-400);
+    margin-bottom: 0.6rem;
+}
+
+.rec-hero-desc {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--gray-300);
+    line-height: 1.9;
+}
+
+/* 기대 성과 박스 */
+.rec-outcomes-box {
+    margin-top: 0.6rem;
+    padding: 0.75rem 1rem;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+}
+
+.rec-outcomes-box h4 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--gray-500);
+    margin-bottom: 0.4rem;
+}
+
+.rec-outcomes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3rem;
+}
+
+.rec-outcome-item {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--gray-700);
+    line-height: 1.6;
+}
+
+/* 우선 개선 — 검정 배경 */
+.rec-improve {
+    background: var(--black);
+    color: var(--white);
+    padding: 1.25rem 1.5rem;
+    margin-top: 1rem;
+}
+
+.rec-improve-title {
+    font-size: 0.9rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+.rec-improve-tip {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fbbf24;
+    margin-bottom: 0.35rem;
+    line-height: 1.7;
+}
+
+.rec-improve-action {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--gray-300);
+    line-height: 1.8;
+}
+
+/* 추천 인트로 텍스트 */
+.rec-intro-text {
+    font-size: 0.8rem;
+    color: var(--gray-600);
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+}
+
+.rec-level {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--gray-400);
+    margin-bottom: 0.3rem;
+}
+
+.rec-course {
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.rec-desc {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    margin-bottom: 0.6rem;
+    line-height: 1.9;
+}
+
+.rec-duration {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    margin-bottom: 0.6rem;
+}
+
+.rec-detail-section {
+    margin-top: 0.6rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--gray-100);
+}
+
+.rec-detail-section h4 {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--gray-500);
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.05em;
+}
+
+.rec-modules-list, .rec-outcomes-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.rec-modules-list li {
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 0.25rem 0.6rem;
+    background: var(--gray-100);
+    color: var(--gray-700);
+}
+
+.rec-card--primary .rec-modules-list li {
+    background: var(--gray-800);
+    color: var(--white);
+}
+
+.rec-card--job {
+    border-color: var(--gray-400);
+    border-left: 3px solid var(--black);
+}
+
+/* 커리큘럼 상세 테이블 */
+.rec-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.rec-table thead th {
+    text-align: left;
+    font-weight: 700;
+    font-size: 0.7rem;
+    padding: 0.55rem 0.75rem;
+    border-bottom: 2px solid var(--black);
+    color: var(--gray-500);
+    letter-spacing: 0.03em;
+}
+
+.rec-table tbody td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--gray-100);
+    line-height: 1.8;
+    color: var(--gray-700);
+    vertical-align: top;
+}
+
+.rec-table-module {
+    font-weight: 700;
+    color: var(--black) !important;
+    white-space: nowrap;
+    width: 28%;
+}
+
+.rec-table-highlight {
+    background: var(--gray-50);
+}
+
+.rec-table-highlight td {
+    font-weight: 600;
+}
+
+.rec-table-level {
+    font-weight: 800 !important;
+    color: var(--black) !important;
+    text-align: center;
+}
+
+/* 로드맵 테이블 */
+.rec-roadmap-table {
+    margin-top: 1rem;
+}
+
+.rec-roadmap-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.rec-table--roadmap .rec-table-module {
+    width: auto;
+    white-space: normal;
+}
+
+.rec-table--roadmap thead th:first-child,
+.rec-table--roadmap tbody td:first-child {
+    width: 50px;
+    text-align: center;
+}
+
+.rec-table--roadmap thead th:nth-child(3),
+.rec-table--roadmap tbody td:nth-child(3) {
+    width: 80px;
+    white-space: nowrap;
+}
+
+.rec-outcomes-list li {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    padding-left: 0.7rem;
+    position: relative;
+    width: 100%;
+    line-height: 1.6;
+}
+
+.rec-outcomes-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gray-400);
+}
+
+.rec-weakness {
+    padding: 1rem 1.25rem;
+    background: var(--gray-50);
+    border-left: 3px solid var(--black);
+    margin-top: 1rem;
+}
+
+.rec-weakness h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+}
+
+.rec-weakness p {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    line-height: 1.8;
+}
+
+/* CTA */
+.recommend-cta {
+    text-align: center;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--black);
+}
+
+.cta-text {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.cta-sub {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: var(--gray-500);
+    margin-bottom: 0.5rem;
+}
+
+.cta-contact {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.cta-contact p {
+    margin-bottom: 0.15rem;
+}
+
+/* ===== Insight Cards (종합 결과 페이지 하단) ===== */
+.insight-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.insight-card {
+    padding: 0.75rem;
+    border: 1px solid var(--gray-200);
+    text-align: center;
+}
+
+.insight-card-value {
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1.2;
+}
+
+.insight-card-label {
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--gray-500);
+    margin-top: 0.25rem;
+}
+
+/* ===== Compact Criteria (등급분포 페이지에 합침) ===== */
+.criteria-section {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+.criteria-section-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.criteria-dims-compact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+}
+
+.criteria-chip {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    padding: 0.4rem 0.6rem;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    line-height: 1.5;
+}
+
+.criteria-chip strong {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 0.15rem;
+}
+
+/* ===== Roadmap (종합결과 하단) ===== */
+#roadmap-section {
+    margin-top: 1.25rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--gray-200);
+    background: var(--gray-50);
+}
+
+.roadmap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.roadmap-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.roadmap-target {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 800;
+}
+
+.roadmap-arrow {
+    color: var(--gray-400);
+    font-size: 1rem;
+}
+
+.roadmap-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.roadmap-action {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.roadmap-step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.3rem;
+    height: 1.3rem;
+    font-size: 0.55rem;
+    font-weight: 800;
+    background: var(--black);
+    color: var(--white);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.roadmap-text {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--gray-700);
+    line-height: 1.4;
+}
+
+.roadmap-cta {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+.roadmap-cta-btn {
+    flex: 1;
+    display: block;
+    text-align: center;
+    padding: 0.6rem 0.5rem;
+    font-family: var(--font);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid var(--gray-300);
+    color: var(--black);
+    background: var(--white);
+    transition: all 0.2s;
+}
+
+.roadmap-cta-btn:hover {
+    border-color: var(--black);
+    background: var(--gray-50);
+}
+
+.roadmap-cta-btn--dark {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+}
+
+.roadmap-cta-btn--dark:hover {
+    background: var(--gray-800);
+}
+
+/* ===== Education Mapping (상세분석 하단) ===== */
+#detail-edu-map {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+.edu-map-title {
+    font-size: 0.9rem;
+    font-weight: 800;
+    margin-bottom: 0.6rem;
+}
+
+.edu-map-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}
+
+.edu-map-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    background: var(--gray-50);
+}
+
+.edu-map-dim {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding-left: 0.6rem;
+}
+
+.edu-map-course {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--gray-600);
+}
+
+.edu-map-cta-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edu-map-cta-btn {
+    flex: 1;
+    display: block;
+    text-align: center;
+    padding: 0.6rem 0.5rem;
+    font-family: var(--font);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid var(--gray-300);
+    color: var(--black);
+    background: var(--white);
+    transition: all 0.2s;
+}
+
+.edu-map-cta-btn:hover {
+    border-color: var(--black);
+}
+
+.edu-map-cta-btn--dark {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+}
+
+.edu-map-cta-btn--dark:hover {
+    background: var(--gray-800);
+}
+
+/* ===== Compact Detail Grid (5개 차원 한 페이지) ===== */
+.detail-grid-compact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.detail-card-compact {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.6rem;
+    align-items: start;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--gray-200);
+}
+
+.detail-card-compact .dcc-grade {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1rem;
+    font-weight: 900;
+    border-radius: 50%;
+    color: var(--white);
+    flex-shrink: 0;
+}
+
+.detail-card-compact .dcc-body {
+    min-width: 0;
+}
+
+.detail-card-compact .dcc-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+}
+
+.detail-card-compact .dcc-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--gray-200);
+    margin-bottom: 0.3rem;
+}
+
+.detail-card-compact .dcc-bar-fill {
+    height: 100%;
+}
+
+.detail-card-compact .dcc-comment {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: var(--gray-600);
+    line-height: 1.6;
+}
+
+.detail-card-compact .dcc-next {
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    margin-top: 0.15rem;
+    padding: 0.15rem 0.4rem;
+    background: var(--gray-50);
+    border-left: 2px solid var(--gray-300);
+}
+
+.detail-card-compact .dcc-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+    margin-top: 0.25rem;
+}
+
+.detail-card-compact .dcc-tag {
+    font-size: 0.5rem;
+    font-weight: 600;
+    padding: 0.15rem 0.35rem;
+    background: var(--gray-100);
+    color: var(--gray-600);
+}
+
+.detail-card-compact .dcc-tag--s {
+    background: var(--black);
+    color: var(--white);
+}
+
+.detail-card-compact .dcc-meta {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.detail-card-compact .dcc-percent {
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.detail-card-compact .dcc-label {
+    font-size: 0.55rem;
+    font-weight: 500;
+    color: var(--gray-500);
+}
+
+/* ===== RESPONSIVE (screen) ===== */
+@media screen and (max-width: 800px) {
+    .report-page {
+        width: 100%;
+        min-height: auto;
+        margin: 1rem 0;
+        padding: 1.5rem;
+        box-shadow: none;
+        border-bottom: 1px solid var(--gray-200);
+    }
+
+    .report-page:first-child {
+        margin-top: 4rem;
+    }
+
+    .overview-chart-section {
+        grid-template-columns: 1fr;
+    }
+
+    .criteria-dims {
+        grid-template-columns: 1fr;
+    }
+
+    .cover-spline {
+        width: 200px;
+        height: 200px;
+    }
+
+    .cover-title {
+        font-size: 2rem;
+    }
+
+    .grade-number {
+        font-size: 3.5rem;
+    }
+}
+
+/* ===== PRINT ===== */
+@media print {
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: white !important;
+        font-size: 12px;
+    }
+
+    .action-bar {
+        display: none !important;
+    }
+
+    .cover-spline-section,
+    .cover-spline,
+    #spline-viewer {
+        display: none !important;
+    }
+
+    /* 표지: Spline 대신 깔끔한 텍스트 표지 */
+    .page-cover {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 3cm 2cm !important;
+    }
+
+    .cover-top {
+        position: static !important;
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .cover-spline-gradient {
+        display: none !important;
+    }
+
+    .cover-bottom-content {
+        position: static !important;
+        text-align: center;
+    }
+
+    .report-page {
+        width: 100% !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 1.5cm 2cm !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: always;
+        page-break-inside: avoid;
+    }
+
+    .report-page:last-child {
+        page-break-after: auto;
+    }
+
+    /* 배경색 강제 출력 */
+    .dcc-grade,
+    .dim-grade,
+    .grade-scale-item,
+    .roadmap-step,
+    .insight-card,
+    .section-narrative,
+    .detail-card-compact,
+    .rec-card,
+    .rec-card--primary,
+    .roadmap-cta-btn--dark,
+    .edu-map-cta-btn--dark,
+    .current-grade {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* 차트 크기 조정 */
+    .radar-container canvas,
+    .dist-chart-section canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* 링크 URL 표시 안 함 */
+    a[href]::after {
+        content: none !important;
+    }
+
+    @page {
+        size: A4 portrait;
+        margin: 0;
+    }
+}
