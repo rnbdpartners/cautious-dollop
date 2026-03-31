@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"html$\")",
+      "WebFetch(domain:cdn.jsdelivr.net)",
+      "WebFetch(domain:prod.spline.design)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:docs.spline.design)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:spline.design)",
+      "WebFetch(domain:noonnu.cc)",
+      "WebFetch(domain:html2pdf.app)",
+      "Bash(node -c js/scoring.js)",
+      "Bash(node -c js/app.js)",
+      "Bash(node -c js/api.js)",
+      "Bash(node -c js/report.js)",
+      "Bash(node -e \":*)",
+      "Bash(for f:*)",
+      "Bash(do echo:*)",
+      "Bash(node -c $f)",
+      "Bash(done)",
+      "Bash(curl:*)",
+      "Bash(node:*)",
+      "Bash(zip -r \"D:/00.claude code/08. AI 사전진단/ai-diagnosis.zip\" index.html report.html css/ js/ -x \"*.pdf\" \"*.gs\" \".claude/*\")",
+      "Bash(powershell -Command \"Compress-Archive -Path ''index.html'',''report.html'',''css'',''js'' -DestinationPath ''ai-diagnosis.zip'' -Force\")",
+      "Bash(gh repo:*)"
+    ]
+  }
+}
