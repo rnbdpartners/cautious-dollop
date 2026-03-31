@@ -29,6 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// ===== Scroll to Top (iframe + 일반 모두 대응) =====
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // iframe 안일 경우 부모 페이지도 스크롤
+    if (window.parent !== window) {
+        window.parent.postMessage({ scrollTop: true }, '*');
+    }
+}
+
 // ===== Start Survey =====
 function startSurvey() {
     const intro = document.getElementById('intro-screen');
@@ -68,7 +77,7 @@ function nextStep() {
             currentStep++;
             updateProgress();
             updateNavButtons();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            scrollToTop();
             gsap.fromTo(next, { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out' });
             animateStep(currentStep);
         }
@@ -89,7 +98,7 @@ function prevStep() {
             currentStep--;
             updateProgress();
             updateNavButtons();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            scrollToTop();
             gsap.fromTo(prev, { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out' });
         }
     });
